@@ -1,0 +1,6 @@
+<aura:component implements="lighting:appHomeTemplate" description="Custom Page Template">
+    <aura:attribute name="left" type=Aura.Component[]" description="Left Region" />
+    <aura:attribute name="right" type=Aura.Component[]" description="Right region" />
+    <aura:attribute name="header" type=Aura.Component[]" description="Header Region" />
+    <aura:attribute name="footer" type=Aura.Component[]" description="Footer Region" />
+</aura:component>	

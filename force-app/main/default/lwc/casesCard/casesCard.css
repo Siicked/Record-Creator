@@ -1,0 +1,37 @@
+template {
+    margin: 0;
+}
+
+footer div {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 10px;
+}
+
+footer div lightning-icon {
+    cursor: pointer;
+}
+
+.combo1 {
+    position: relative;
+    bottom: 10px;
+}
+
+.scroll-container {
+    overflow-x: auto;
+    width: 100%;
+}
+
+.list-visible {
+    display: block !important;
+}
+
+.list-hidden {
+    display: none !important;
+}
+
+.required {
+    color: red;
+    margin-left: 0.2rem; /* Espacio entre el texto y el asterisco */
+    cursor: pointer;
+}

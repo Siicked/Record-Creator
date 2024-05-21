@@ -1,0 +1,252 @@
+<!-- sldsValidatorIgnore -->
+<template>
+    <div class="slds-card">   
+        <header class="slds">
+    <div class="slds-card__header slds-grid">
+        <header class="slds-media slds-media_center slds-has-flexi-truncate">
+          <div class="slds-media__figure">
+            <span class="slds-icon_container slds-icon-standard-account" title="Cases">
+              <lightning-icon 
+                icon-name="standard:case" 
+                alternative-text="Connected" 
+                size="small" 
+                title="Case"
+                variant="inverse"
+              ></lightning-icon>
+              <span class="slds-assistive-text">Cases</span>
+            </span>
+          </div>
+          <div class="slds-media__body">
+            <h2 class="slds-card__header-title">
+              <a href="#" class="slds-card__header-link slds-truncate" title="Accounts">
+                <span>Cases</span>
+              </a>
+            </h2>
+          </div>
+
+          <div class="slds-form-element">
+            <div class="slds-form-element__control">
+              <div class="slds-combobox_container slds-size_small">
+                <lightning-combobox class="combo1"
+         name="options"  
+        value={selectedOption}
+        options={options}
+        onchange={handleOptionChange}>
+        </lightning-combobox>
+              </div>
+            </div>
+          </div>
+          
+          <div class="slds-no-flex">
+            <button class="slds-button slds-button_neutral" onclick={openNewCasePanel}>New</button>
+          </div>
+
+          <template if:true={showNewCasePanel}>
+            <div class="slds-backdrop slds-backdrop_open">
+            <div class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <div class="slds-modal__header">
+                        <h2 class="slds-text-heading_medium">Create New Case</h2>
+                        <button class="slds-button slds-button_icon slds-modal__close" title="Close" onclick={closeNewCasePanel}>
+                            <lightning-icon icon-name="utility:close" alternative-text="Close"></lightning-icon>
+                        </button>
+                    </div>
+
+
+                    <div class="slds-modal__content slds-p-around_medium">
+    <div class="slds-form slds-form_stacked">
+        <lightning-combobox
+            name="status"
+            label="Status"
+            value={selectedValue} 
+            options={values}
+            onchange={handleInputChange}>
+        </lightning-combobox>
+
+        <lightning-combobox
+            name="priority"
+            label="Priority"
+            value={selectedPrior} 
+            options={prioritys}
+            onchange={handleInputChange}>
+        </lightning-combobox>
+
+        <div class="slds-form-element slds-m-top_medium">
+          <label class="slds-form-element__label">Subject</label>
+          <div class="slds-form-element__control">
+              <div class="slds-combobox_container">
+                  <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click">
+                      <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+                          <input type="text" class="slds-input slds-combobox__inputt" aria-autocomplete="list" aria-expanded="false" aria-haspopup="listbox" autocomplete="off" role="combobox" placeholder="Subject" oninput={handleInputChangeSubject} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+        <div class="slds-form-element slds-m-top_medium">
+          <label class="slds-form-element__label" for="lookup-account">
+            <span class="required" title="Required">*</span>
+            Account Name
+        </label>
+            <div class="slds-form-element__control">
+                <div class="slds-combobox_container">
+                    <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click">
+                        <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+                            <input name="accountName" type="text" class="slds-input slds-combobox__input" id="lookup-account" aria-autocomplete="list" aria-controls="listbox-account" aria-expanded="false" aria-haspopup="listbox" autocomplete="off" role="combobox" placeholder="Search Accounts..." oninput={handleAccountInputChange} />
+
+                            <span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right">
+                                <svg class="slds-icon slds-icon slds-icon_x-small slds-icon-text-default" aria-hidden="true">
+                                    <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#search"></use>
+                                </svg>
+                            </span>
+                        </div>
+                        <div id="listbox-account" class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid list-hidden" role="listbox" aria-label="Account Search Results" tabindex="0" aria-busy="false" onmouseleave={handleListMouseLeave}>
+                            <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                                <template for:each={accounts} for:item="account">
+                                    <li key={account.Id} role="presentation" class="slds-listbox__item" data-id={account.Id} onclick={handleAccountSelect}>
+                                        <div class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta" role="option">
+                                            <span class="slds-media__figure slds-listbox__option-icon">
+                                                <span class="slds-icon_container slds-icon-standard-account">
+                                                    <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                                                        <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#account"></use>
+                                                    </svg>
+                                                </span>
+                                            </span>
+                                            <span class="slds-media__body">
+                                                <span class="slds-listbox__option-text slds-listbox__option-text_entity">{account.Name}</span>
+                                                <span class="slds-listbox__option-meta slds-listbox__option-meta_entity">{account.Location}</span>
+                                            </span>
+                                        </div>
+                                    </li>
+                                </template>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <lightning-combobox class="slds-m-top_medium"
+            name="Case Origin"
+            label="Case Origin"
+            value={selectedOrigin} 
+            options={origins}
+            onchange={handleInputChange}>
+        </lightning-combobox>
+
+        <lightning-combobox
+            name="type"
+            label="Type"
+            value={selectedType} 
+            options={types}
+            onchange={handleInputChange}>
+        </lightning-combobox>
+    </div>
+</div>
+<div class="slds-modal__footer">
+  <button class="slds-button slds-button_neutral" onclick={closeNewCasePanel}>Cancel</button>
+  <button class="slds-button slds-button_brand" onclick={handleSave}>Save</button>
+</div>
+                </div>
+              
+                </div>
+            </div>
+            
+        </template>
+        </header>
+      </div>
+
+    </header>
+      <main class="slds-p-top_xxx-small">
+        <div class="slds-card scroll-container">
+
+          <template if:true={isLoading}>
+            <div class="slds-spinner_container">
+                <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">
+                    <span class="slds-assistive-text">Loading</span>
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+
+                </div>
+            </div>
+        </template>
+        
+        <template if:true={isRefreshing}>
+          <div class="slds-spinner_container">
+            <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">
+            <span class="slds-assistive-text">Loading</span>
+            <div class="slds-spinner__dot-a"></div>
+            <div class="slds-spinner__dot-b"></div>
+          </div>
+        </div>
+      </template>
+        
+          <template if:true={cases} >
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <th scope="col">
+                            <div class="slds-truncate" title="Account Name">Account Name</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Case Number">Case Number</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Status">Status</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Priority">Priority</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={cases} for:item="caseItem">
+                        <tr key={caseItem.caseNumber}>
+                            <td>
+                              <div class="slds-truncate" title={caseItem.accountName}>
+                                <a href={getAccountUrl} target="_blank">{caseItem.accountName}</a>
+                            </div>
+                            </td>
+
+                            <td>
+                              <div class="slds-truncate" title={caseItem.caseNumber}>
+                                <a href={getAccountUr} target="_blank">{caseItem.caseNumber}</a>
+                              </div>
+                            </td>
+
+                            <td>
+                                <div class="slds-truncate" title={caseItem.status}>{caseItem.status}</div>
+                            </td>
+
+                            <td>
+                              <div class="slds-truncate" title={caseItem.priority}>{caseItem.priority}</div>
+                          </td>
+                        </tr>
+
+                    </template>
+                    <template if:true={error}>
+                      <p>{error.body.message}</p>
+                  </template>
+                </tbody>
+            </table>
+        </template>
+        </div>
+      </main>
+      <footer class="slds-p-top_xx-small">
+        <div class="slds-card">
+            <a target="_blank" href="https://juancruzberga-a-dev-ed.develop.lightning.force.com/lightning/o/Case/list?filterName=00Bak000008mGuLEAU">See Folder</a>
+            <lightning-icon 
+              icon-name="utility:refresh" 
+              alternative-text="Connected" 
+              size="small" 
+              title="large size"
+              variant="inverse"
+              class="slds-input__icon slds-input__icon_right slds-icon-text-default"
+              onclick={handleRefreshClick}
+            ></lightning-icon>     
+        </div>
+      </footer>
+    
+    </div>
+</template>
