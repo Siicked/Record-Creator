@@ -47,7 +47,7 @@ public with sharing class casesCard {
         @AuraEnabled
         public String origin;
         @AuraEnabled
-        public String type;
+        public Id type;
 
 
         public CaseWrapper(String accountName, String caseNumber, String contactEmail, String status, String priority, String origin, String type) {
